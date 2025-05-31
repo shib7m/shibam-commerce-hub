@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Desk, ChairOffice, Archive, Home, ArrowLeft } from 'lucide-react';
+import { Monitor, Armchair, FileArchive, Home, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,7 +14,7 @@ const OfficeFurniture = () => {
     {
       id: 'desks',
       name: 'مكاتب',
-      icon: Desk,
+      icon: Monitor,
       count: 25,
       description: 'مكاتب مكتبية ومنزلية',
       color: 'bg-blue-100 text-blue-600'
@@ -23,7 +22,7 @@ const OfficeFurniture = () => {
     {
       id: 'chairs',
       name: 'كراسي مكتبية',
-      icon: ChairOffice,
+      icon: Armchair,
       count: 38,
       description: 'كراسي مريحة للعمل',
       color: 'bg-green-100 text-green-600'
@@ -31,7 +30,7 @@ const OfficeFurniture = () => {
     {
       id: 'cabinets',
       name: 'خزائن',
-      icon: Archive,
+      icon: FileArchive,
       count: 20,
       description: 'خزائن تخزين وملفات',
       color: 'bg-purple-100 text-purple-600'

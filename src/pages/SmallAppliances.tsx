@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Blender, Zap, ChefHat, Home, ArrowLeft } from 'lucide-react';
+import { Blend, Zap, ChefHat, Home, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,7 +14,7 @@ const SmallAppliances = () => {
     {
       id: 'blenders',
       name: 'خلاطات',
-      icon: Blender,
+      icon: Blend,
       count: 22,
       description: 'خلاطات كهربائية بقوات مختلفة',
       color: 'bg-green-100 text-green-600'
