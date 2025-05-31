@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Monitor, Sofa, Laptop, Home, Coffee } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 
 const CategoriesSection = () => {
@@ -10,35 +11,40 @@ const CategoriesSection = () => {
       name: 'التلفزيونات',
       icon: Monitor,
       color: 'bg-blue-100 text-blue-600',
-      count: 150
+      count: 150,
+      path: '/electronics/tvs'
     },
     {
       id: 2,
       name: 'الأثاث المنزلي',
       icon: Sofa,
       color: 'bg-green-100 text-green-600',
-      count: 200
+      count: 200,
+      path: '/furniture'
     },
     {
       id: 3,
       name: 'أجهزة الكمبيوتر',
       icon: Laptop,
       color: 'bg-purple-100 text-purple-600',
-      count: 85
+      count: 85,
+      path: '/electronics'
     },
     {
       id: 4,
       name: 'ديكورات المنزل',
       icon: Home,
       color: 'bg-orange-100 text-orange-600',
-      count: 120
+      count: 120,
+      path: '/home-decor'
     },
     {
       id: 5,
       name: 'أجهزة المطبخ',
       icon: Coffee,
       color: 'bg-red-100 text-red-600',
-      count: 90
+      count: 90,
+      path: '/small-appliances'
     }
   ];
 
@@ -54,18 +60,17 @@ const CategoriesSection = () => {
           {categories.map((category) => {
             const IconComponent = category.icon;
             return (
-              <Card
-                key={category.id}
-                className="hover:shadow-lg transition-all duration-300 cursor-pointer hover-scale group"
-              >
-                <CardContent className="p-6 text-center">
-                  <div className={`w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center ${category.color} group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className="w-8 h-8" />
-                  </div>
-                  <h3 className="font-semibold text-gray-800 mb-2">{category.name}</h3>
-                  <p className="text-sm text-gray-500">{category.count} منتج</p>
-                </CardContent>
-              </Card>
+              <Link key={category.id} to={category.path}>
+                <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer hover-scale group">
+                  <CardContent className="p-6 text-center">
+                    <div className={`w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center ${category.color} group-hover:scale-110 transition-transform duration-300`}>
+                      <IconComponent className="w-8 h-8" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800 mb-2">{category.name}</h3>
+                    <p className="text-sm text-gray-500">{category.count} منتج</p>
+                  </CardContent>
+                </Card>
+              </Link>
             );
           })}
         </div>
