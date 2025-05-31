@@ -63,6 +63,11 @@ const Sidebar = () => {
         { title: 'مكاوي', path: '/small-appliances/irons' },
         { title: 'أدوات المطبخ', path: '/small-appliances/kitchen-tools' }
       ]
+    },
+    {
+      title: 'لوحة الإدارة',
+      icon: Phone,
+      path: '/admin'
     }
   ];
 
