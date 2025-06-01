@@ -42,34 +42,17 @@ const Header = () => {
   return (
     <>
       <header className="bg-white shadow-lg sticky top-0 z-50">
-        {/* Top Bar */}
-        <div className="bg-brand-blue text-white py-2">
-          <div className="container mx-auto px-4">
-            <div className="flex justify-between items-center text-sm">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1">
-                  <Phone className="w-4 h-4" />
-                  <span>+96777749263</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <MapPin className="w-4 h-4" />
-                  <span>صنعاء - شارع القيادة</span>
-                </div>
-              </div>
-              <div className="hidden md:block">
-                <span>ساعات العمل: 8 صباحاً - 10 مساءً</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Main Header */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
-              <Link to="/" className="text-2xl font-bold text-brand-blue font-ubuntu hover:text-blue-600 transition-colors">
-                🏪 شبام للتجارة
+              <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
+                <img 
+                  src="/lovable-uploads/d7fe75c5-79bb-463f-924a-7f0bcbbd728e.png" 
+                  alt="شبام للتجارة" 
+                  className="h-12 w-auto"
+                />
               </Link>
             </div>
 
@@ -196,9 +179,19 @@ const Header = () => {
                   </li>
                 ))}
                 <li>
-                  <a href="/contact" className="block py-2 px-4 text-gray-700 hover:text-brand-blue transition-colors">
+                  <Link to="/contact" className="block py-2 px-4 text-gray-700 hover:text-brand-blue transition-colors">
                     اتصل بنا
-                  </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/offers" className="block py-2 px-4 text-gray-700 hover:text-brand-blue transition-colors">
+                    العروض
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/partners" className="block py-2 px-4 text-gray-700 hover:text-brand-blue transition-colors">
+                    الشركاء
+                  </Link>
                 </li>
               </ul>
             </div>
