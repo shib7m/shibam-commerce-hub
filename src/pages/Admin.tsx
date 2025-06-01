@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Package, Grid3X3, Eye } from 'lucide-react';
+import { Package, Grid3X3, Eye, Users } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -8,6 +7,7 @@ import AdminHeader from '@/components/admin/AdminHeader';
 import ProductsTab from '@/components/admin/ProductsTab';
 import CategoriesTab from '@/components/admin/CategoriesTab';
 import OrdersTab from '@/components/admin/OrdersTab';
+import UserRegistrationsTab from '@/components/admin/UserRegistrationsTab';
 
 interface Product {
   id: string;
@@ -107,7 +107,7 @@ const Admin = () => {
 
         {/* Admin Tabs */}
         <Tabs defaultValue="products" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="products" className="flex items-center gap-2">
               <Package className="w-4 h-4" />
               إدارة المنتجات
@@ -119,6 +119,10 @@ const Admin = () => {
             <TabsTrigger value="orders" className="flex items-center gap-2">
               <Eye className="w-4 h-4" />
               مراجعة الطلبات
+            </TabsTrigger>
+            <TabsTrigger value="registrations" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              المسجلين
             </TabsTrigger>
           </TabsList>
 
@@ -147,6 +151,11 @@ const Admin = () => {
           {/* Orders Management */}
           <TabsContent value="orders">
             <OrdersTab />
+          </TabsContent>
+
+          {/* User Registrations */}
+          <TabsContent value="registrations">
+            <UserRegistrationsTab />
           </TabsContent>
         </Tabs>
       </main>
