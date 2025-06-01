@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Package, Grid3X3, Eye, Users } from 'lucide-react';
+import { Package, Grid3X3, Eye, Users, LogOut } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AdminHeader from '@/components/admin/AdminHeader';
@@ -8,6 +9,10 @@ import ProductsTab from '@/components/admin/ProductsTab';
 import CategoriesTab from '@/components/admin/CategoriesTab';
 import OrdersTab from '@/components/admin/OrdersTab';
 import UserRegistrationsTab from '@/components/admin/UserRegistrationsTab';
+import AdminLoginDialog from '@/components/admin/AdminLoginDialog';
+import { useAdmin } from '@/contexts/AdminContext';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 interface Product {
   id: string;
@@ -28,6 +33,11 @@ interface Category {
 }
 
 const Admin = () => {
+  const { isAdmin, logout } = useAdmin();
+  const [showLoginDialog, setShowLoginDialog] = useState(!isAdmin);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
   // Sample data - في التطبيق الحقيقي ستأتي من قاعدة البيانات
   const [products, setProducts] = useState<Product[]>([
     {
@@ -98,12 +108,60 @@ const Admin = () => {
     setCategories(categories.filter(c => c.id !== id));
   };
 
+  const handleLoginSuccess = () => {
+    setShowLoginDialog(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    toast({
+      title: "تم تسجيل الخروج",
+      description: "شكراً لك، نراك قريباً",
+    });
+    navigate('/');
+  };
+
+  // Show login dialog if not admin
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <main className="container mx-auto px-4 py-8">
+          <div className="text-center py-12">
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">🔒 منطقة محظورة</h1>
+            <p className="text-gray-600 mb-6">هذه الصفحة متاحة للمديرين فقط</p>
+            <Button onClick={() => setShowLoginDialog(true)}>
+              تسجيل دخول الإدارة
+            </Button>
+          </div>
+        </main>
+        <Footer />
+        
+        <AdminLoginDialog
+          open={showLoginDialog}
+          onOpenChange={setShowLoginDialog}
+          onSuccess={handleLoginSuccess}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       
       <main className="container mx-auto px-4 py-8">
-        <AdminHeader />
+        <div className="flex items-center justify-between mb-6">
+          <AdminHeader />
+          <Button
+            variant="outline"
+            onClick={handleLogout}
+            className="flex items-center gap-2"
+          >
+            <LogOut className="w-4 h-4" />
+            تسجيل الخروج
+          </Button>
+        </div>
 
         {/* Admin Tabs */}
         <Tabs defaultValue="products" className="w-full">
