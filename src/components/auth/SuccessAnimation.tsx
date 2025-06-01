@@ -23,9 +23,9 @@ const SuccessAnimation = ({ onComplete }: SuccessAnimationProps) => {
       {/* Fireworks Animation */}
       <div className="relative">
         <div className="fireworks">
-          <div className="firework"></div>
-          <div className="firework"></div>
-          <div className="firework"></div>
+          <div className="firework firework-1"></div>
+          <div className="firework firework-2"></div>
+          <div className="firework firework-3"></div>
         </div>
         
         {/* Success Message */}
@@ -60,55 +60,6 @@ const SuccessAnimation = ({ onComplete }: SuccessAnimationProps) => {
           العودة للصفحة الرئيسية
         </Button>
       )}
-
-      <style jsx>{`
-        .fireworks {
-          position: relative;
-          height: 100px;
-          width: 100%;
-        }
-        
-        .firework {
-          position: absolute;
-          width: 4px;
-          height: 4px;
-          border-radius: 50%;
-          animation: firework 2s infinite;
-        }
-        
-        .firework:nth-child(1) {
-          left: 20%;
-          background: #ff6b6b;
-          animation-delay: 0s;
-        }
-        
-        .firework:nth-child(2) {
-          left: 50%;
-          background: #4ecdc4;
-          animation-delay: 0.5s;
-        }
-        
-        .firework:nth-child(3) {
-          left: 80%;
-          background: #ffe66d;
-          animation-delay: 1s;
-        }
-        
-        @keyframes firework {
-          0% {
-            transform: scale(0) translateY(0);
-            opacity: 1;
-          }
-          50% {
-            transform: scale(1.5) translateY(-30px);
-            opacity: 1;
-          }
-          100% {
-            transform: scale(0) translateY(-60px);
-            opacity: 0;
-          }
-        }
-      `}</style>
     </div>
   );
 };

@@ -109,6 +109,38 @@
   }
 
   /* Fireworks Animation */
+  .fireworks {
+    position: relative;
+    height: 100px;
+    width: 100%;
+  }
+  
+  .firework {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    animation: firework 2s infinite;
+  }
+  
+  .firework-1 {
+    left: 20%;
+    background: #ff6b6b;
+    animation-delay: 0s;
+  }
+  
+  .firework-2 {
+    left: 50%;
+    background: #4ecdc4;
+    animation-delay: 0.5s;
+  }
+  
+  .firework-3 {
+    left: 80%;
+    background: #ffe66d;
+    animation-delay: 1s;
+  }
+
   @keyframes firework {
     0% {
       transform: scale(0) translateY(0);
