@@ -20,7 +20,7 @@ export const useAdmin = () => {
 
 export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
-  const adminPassword = "admin123"; // In production, this should be more secure
+  const adminPassword = "1995"; // Updated admin password
 
   useEffect(() => {
     const savedAdminStatus = localStorage.getItem('shabam-admin');
