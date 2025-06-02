@@ -1,0 +1,22 @@
+
+{
+  "short_name": "شبام",
+  "name": "شبام للتجارة - متجر إلكتروني شامل",
+  "icons": [
+    {
+      "src": "/lovable-uploads/d7fe75c5-79bb-463f-924a-7f0bcbbd728e.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/lovable-uploads/d7fe75c5-79bb-463f-924a-7f0bcbbd728e.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1e40af",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary"
+}

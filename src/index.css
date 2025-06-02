@@ -92,6 +92,37 @@
 
   body {
     @apply bg-background text-foreground font-ubuntu;
+    /* تحسينات للأجهزة المحمولة */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* منع التمرير الأفقي غير المرغوب */
+    overflow-x: hidden;
+  }
+
+  /* تحسينات للمس والأجهزة المحمولة */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* تحسين الأزرار للأجهزة المحمولة */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* تحسين النصوص للأجهزة الصغيرة */
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px;
+    }
+    
+    .text-xs { font-size: 0.75rem; }
+    .text-sm { font-size: 0.875rem; }
+    .text-base { font-size: 1rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-xl { font-size: 1.25rem; }
   }
 }
 
@@ -106,6 +137,32 @@
   
   .text-gradient {
     @apply bg-gradient-to-r from-brand-blue to-blue-600 bg-clip-text text-transparent;
+  }
+
+  /* تحسين الحاويات للأجهزة المحمولة */
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  /* تحسين الشبكات للأجهزة المختلفة */
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4;
+  }
+
+  /* تحسين النماذج للأجهزة المحمولة */
+  .mobile-form {
+    @apply space-y-4;
+  }
+
+  .mobile-form input,
+  .mobile-form textarea,
+  .mobile-form select {
+    @apply text-base; /* منع التكبير في iOS Safari */
+  }
+
+  /* تحسين الحوارات للأجهزة المحمولة */
+  .mobile-dialog {
+    @apply max-w-[95vw] max-h-[90vh] overflow-y-auto;
   }
 
   /* Fireworks Animation */
@@ -175,4 +232,85 @@
                   -20px 20px 0 -4px currentColor;
     }
   }
+
+  /* Success Animation for mobile */
+  .success-animation {
+    width: 80px;
+    height: 80px;
+    border: 4px solid #22c55e;
+    border-radius: 50%;
+    position: relative;
+    animation: success-circle 0.75s ease-in-out;
+  }
+
+  .success-animation::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 20px;
+    border-left: 4px solid #22c55e;
+    border-bottom: 4px solid #22c55e;
+    transform: translate(-50%, -70%) rotate(-45deg);
+    animation: success-check 0.5s ease-in-out 0.75s both;
+  }
+
+  @keyframes success-circle {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes success-check {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+    25% {
+      width: 0;
+      height: 20px;
+      opacity: 1;
+    }
+    100% {
+      width: 40px;
+      height: 20px;
+      opacity: 1;
+    }
+  }
+}
+
+/* تحسينات إضافية للأداء */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* تحسين التمرير للأجهزة المحمولة */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* إخفاء شريط التمرير مع الحفاظ على الوظيفة */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }

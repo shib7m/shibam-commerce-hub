@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./contexts/CartContext";
 import { SidebarProvider } from "./contexts/SidebarContext";
 import { AdminProvider } from "./contexts/AdminContext";
+import MobileOptimization from "./components/MobileOptimization";
+import { OptimizedAdmin, OptimizedCart } from "./components/PerformanceOptimizer";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Electronics from "./pages/Electronics";
@@ -14,15 +16,20 @@ import Furniture from "./pages/Furniture";
 import OfficeFurniture from "./pages/OfficeFurniture";
 import HomeDecor from "./pages/HomeDecor";
 import SmallAppliances from "./pages/SmallAppliances";
-import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 import CategoryPage from "./pages/CategoryPage";
-import Admin from "./pages/Admin";
 import Contact from "./pages/Contact";
 import Partners from "./pages/Partners";
 import Offers from "./pages/Offers";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 دقائق
+      cacheTime: 10 * 60 * 1000, // 10 دقائق
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -30,6 +37,7 @@ const App = () => (
       <AdminProvider>
         <CartProvider>
           <SidebarProvider>
+            <MobileOptimization />
             <Toaster />
             <Sonner />
             <BrowserRouter>
@@ -45,13 +53,12 @@ const App = () => (
                 <Route path="/home-decor/:subcategory" element={<CategoryPage category="home-decor" />} />
                 <Route path="/small-appliances" element={<SmallAppliances />} />
                 <Route path="/small-appliances/:subcategory" element={<CategoryPage category="small-appliances" />} />
-                <Route path="/cart" element={<Cart />} />
+                <Route path="/cart" element={<OptimizedCart />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
-                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin" element={<OptimizedAdmin />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/partners" element={<Partners />} />
                 <Route path="/offers" element={<Offers />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
