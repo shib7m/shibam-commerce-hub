@@ -2,16 +2,7 @@
 import React from 'react';
 import AddProductForm from './AddProductForm';
 import ProductsList from './ProductsList';
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  category: string;
-  description: string;
-  image: string;
-  inStock: boolean;
-}
+import type { Product } from '@/types/admin';
 
 interface ProductsTabProps {
   products: Product[];

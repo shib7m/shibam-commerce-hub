@@ -2,14 +2,7 @@
 import React from 'react';
 import AddCategoryForm from './AddCategoryForm';
 import CategoriesList from './CategoriesList';
-
-interface Category {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  productCount: number;
-}
+import type { Category } from '@/types/admin';
 
 interface CategoriesTabProps {
   categories: Category[];

@@ -5,20 +5,23 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-
-interface Category {
-  name: string;
-  description: string;
-  icon: string;
-}
+import MediaUploader from './MediaUploader';
+import type { Category } from '@/types/admin';
 
 interface AddCategoryFormProps {
-  newCategory: Category;
-  setNewCategory: (category: Category) => void;
+  newCategory: Omit<Category, 'id' | 'productCount'>;
+  setNewCategory: (category: Omit<Category, 'id' | 'productCount'>) => void;
   onAddCategory: () => void;
 }
 
 const AddCategoryForm = ({ newCategory, setNewCategory, onAddCategory }: AddCategoryFormProps) => {
+  const handleMediaChange = (media: any[]) => {
+    setNewCategory({
+      ...newCategory,
+      media: media
+    });
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -35,7 +38,7 @@ const AddCategoryForm = ({ newCategory, setNewCategory, onAddCategory }: AddCate
             onChange={(e) => setNewCategory({...newCategory, name: e.target.value})}
           />
           <Input
-            placeholder="اسم الأيقونة"
+            placeholder="أيقونة القسم"
             value={newCategory.icon}
             onChange={(e) => setNewCategory({...newCategory, icon: e.target.value})}
           />
@@ -45,6 +48,13 @@ const AddCategoryForm = ({ newCategory, setNewCategory, onAddCategory }: AddCate
           value={newCategory.description}
           onChange={(e) => setNewCategory({...newCategory, description: e.target.value})}
         />
+        
+        <MediaUploader
+          onMediaChange={handleMediaChange}
+          initialMedia={newCategory.media || []}
+          maxFiles={5}
+        />
+        
         <Button onClick={onAddCategory} className="bg-brand-blue hover:bg-blue-600">
           <Save className="w-4 h-4 ml-2" />
           حفظ القسم

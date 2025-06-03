@@ -7,6 +7,7 @@ import CategoriesTab from './CategoriesTab';
 import OrdersTab from './OrdersTab';
 import UserRegistrationsTab from './UserRegistrationsTab';
 import { useAdminData } from '@/hooks/useAdminData';
+import type { Product, Category } from '@/types/admin';
 
 const AdminDashboard = () => {
   const {
@@ -21,6 +22,15 @@ const AdminDashboard = () => {
     handleAddCategory,
     handleDeleteCategory
   } = useAdminData();
+
+  // Wrapper functions to handle the type conversions
+  const handleNewProductChange = (product: Omit<Product, 'id'>) => {
+    setNewProduct(product);
+  };
+
+  const handleNewCategoryChange = (category: Omit<Category, 'id' | 'productCount'>) => {
+    setNewCategory(category);
+  };
 
   return (
     <Tabs defaultValue="products" className="w-full">
@@ -47,7 +57,7 @@ const AdminDashboard = () => {
         <ProductsTab
           products={products}
           newProduct={newProduct}
-          setNewProduct={setNewProduct}
+          setNewProduct={handleNewProductChange}
           onAddProduct={handleAddProduct}
           onDeleteProduct={handleDeleteProduct}
         />
@@ -57,7 +67,7 @@ const AdminDashboard = () => {
         <CategoriesTab
           categories={categories}
           newCategory={newCategory}
-          setNewCategory={setNewCategory}
+          setNewCategory={handleNewCategoryChange}
           onAddCategory={handleAddCategory}
           onDeleteCategory={handleDeleteCategory}
         />

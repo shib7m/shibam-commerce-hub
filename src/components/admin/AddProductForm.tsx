@@ -5,23 +5,24 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-
-interface Product {
-  name: string;
-  price: number;
-  category: string;
-  description: string;
-  image: string;
-  inStock: boolean;
-}
+import MediaUploader from './MediaUploader';
+import type { Product } from '@/types/admin';
 
 interface AddProductFormProps {
-  newProduct: Product;
-  setNewProduct: (product: Product) => void;
+  newProduct: Omit<Product, 'id'>;
+  setNewProduct: (product: Omit<Product, 'id'>) => void;
   onAddProduct: () => void;
 }
 
 const AddProductForm = ({ newProduct, setNewProduct, onAddProduct }: AddProductFormProps) => {
+  const handleMediaChange = (media: any[]) => {
+    setNewProduct({
+      ...newProduct,
+      media: media,
+      image: media.length > 0 ? media[0].url : newProduct.image
+    });
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -49,7 +50,7 @@ const AddProductForm = ({ newProduct, setNewProduct, onAddProduct }: AddProductF
             onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}
           />
           <Input
-            placeholder="رابط الصورة"
+            placeholder="رابط الصورة الرئيسية (اختياري)"
             value={newProduct.image}
             onChange={(e) => setNewProduct({...newProduct, image: e.target.value})}
           />
@@ -59,6 +60,13 @@ const AddProductForm = ({ newProduct, setNewProduct, onAddProduct }: AddProductF
           value={newProduct.description}
           onChange={(e) => setNewProduct({...newProduct, description: e.target.value})}
         />
+        
+        <MediaUploader
+          onMediaChange={handleMediaChange}
+          initialMedia={newProduct.media || []}
+          maxFiles={10}
+        />
+        
         <Button onClick={onAddProduct} className="bg-brand-blue hover:bg-blue-600">
           <Save className="w-4 h-4 ml-2" />
           حفظ المنتج
