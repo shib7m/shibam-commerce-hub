@@ -121,47 +121,47 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div
         id="sidebar"
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
           isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Header - Compact */}
-        <div className="flex items-center justify-between p-3 border-b bg-brand-blue text-white">
-          <h2 className="text-lg font-bold">القائمة الرئيسية</h2>
+        {/* Header - Ultra Compact */}
+        <div className="flex items-center justify-between p-2 border-b bg-brand-blue text-white flex-shrink-0">
+          <h2 className="text-base font-bold">القائمة</h2>
           <button
             onClick={closeSidebar}
-            className="p-1.5 hover:bg-blue-600 rounded-full transition-colors"
+            className="p-1 hover:bg-blue-600 rounded transition-colors"
             aria-label="إغلاق القائمة"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3 h-3" />
           </button>
         </div>
 
-        {/* Menu Content - Optimized for no scrolling */}
+        {/* Menu Content - Maximum space utilization */}
         <div className="flex-1 overflow-hidden">
-          <nav className="p-2 h-full">
-            <ul className="space-y-0.5 h-full flex flex-col">
+          <nav className="p-1 h-full">
+            <ul className="space-y-0 h-full flex flex-col text-xs">
               {menuItems.map((item, index) => {
                 const IconComponent = item.icon;
                 return (
                   <li key={index} className="flex-shrink-0">
                     <Link
                       to={item.path}
-                      className="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-50 hover:text-brand-blue rounded transition-colors group text-sm"
+                      className="flex items-center gap-1.5 p-1.5 text-gray-700 hover:bg-blue-50 hover:text-brand-blue rounded transition-colors group"
                       onClick={closeSidebar}
                     >
-                      <IconComponent className="w-4 h-4 group-hover:scale-110 transition-transform flex-shrink-0" />
-                      <span className="font-medium">{item.title}</span>
+                      <IconComponent className="w-3 h-3 group-hover:scale-110 transition-transform flex-shrink-0" />
+                      <span className="font-medium text-xs">{item.title}</span>
                     </Link>
                     
-                    {/* Sub Items - Compact */}
+                    {/* Sub Items - Ultra Compact */}
                     {item.subItems && (
-                      <ul className="mr-6 mt-0.5 space-y-0.5">
+                      <ul className="mr-4 space-y-0">
                         {item.subItems.map((subItem, subIndex) => (
                           <li key={subIndex}>
                             <Link
                               to={subItem.path}
-                              className="block p-1.5 text-xs text-gray-600 hover:text-brand-blue hover:bg-blue-50 rounded transition-colors"
+                              className="block p-1 text-xs text-gray-600 hover:text-brand-blue hover:bg-blue-50 rounded transition-colors leading-tight"
                               onClick={closeSidebar}
                             >
                               {subItem.title}
@@ -177,19 +177,19 @@ const Sidebar = () => {
           </nav>
         </div>
 
-        {/* Footer - Compact */}
-        <div className="p-3 border-t bg-gray-50 flex-shrink-0">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs text-gray-600">
-              <Phone className="w-3 h-3" />
-              <span>+96777749263</span>
+        {/* Footer - Minimal */}
+        <div className="p-2 border-t bg-gray-50 flex-shrink-0">
+          <div className="space-y-1">
+            <div className="flex items-center gap-1 text-xs text-gray-600">
+              <Phone className="w-2 h-2" />
+              <span className="text-xs">+96777749263</span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-gray-600">
-              <Mail className="w-3 h-3" />
-              <span>info@shabam.com</span>
+            <div className="flex items-center gap-1 text-xs text-gray-600">
+              <Mail className="w-2 h-2" />
+              <span className="text-xs">info@shabam.com</span>
             </div>
-            <p className="text-xs text-gray-500 text-center">
-              © 2024 شبام للتجارة
+            <p className="text-xs text-gray-500 text-center leading-tight">
+              © 2024 شبام
             </p>
           </div>
         </div>
