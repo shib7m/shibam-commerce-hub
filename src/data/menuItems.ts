@@ -1,5 +1,5 @@
 
-import { Home, Monitor, Sofa, Briefcase, Palette, Coffee, Phone } from 'lucide-react';
+import { Home, Monitor, Sofa, Briefcase, Palette, Coffee, Settings } from 'lucide-react';
 import { MenuItem } from '@/types/sidebar';
 
 export const menuItems: MenuItem[] = [
@@ -7,6 +7,11 @@ export const menuItems: MenuItem[] = [
     title: 'الرئيسية',
     icon: Home,
     path: '/'
+  },
+  {
+    title: 'لوحة الإدارة',
+    icon: Settings,
+    path: '/admin'
   },
   {
     title: 'الإلكترونيات',
@@ -58,10 +63,5 @@ export const menuItems: MenuItem[] = [
       { title: 'مكاوي', path: '/small-appliances/irons' },
       { title: 'أدوات المطبخ', path: '/small-appliances/kitchen-tools' }
     ]
-  },
-  {
-    title: 'لوحة الإدارة',
-    icon: Phone,
-    path: '/admin'
   }
 ];
