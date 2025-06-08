@@ -121,47 +121,47 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div
         id="sidebar"
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
           isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b bg-brand-blue text-white">
-          <h2 className="text-xl font-bold">القائمة الرئيسية</h2>
+        {/* Header - Compact */}
+        <div className="flex items-center justify-between p-3 border-b bg-brand-blue text-white">
+          <h2 className="text-lg font-bold">القائمة الرئيسية</h2>
           <button
             onClick={closeSidebar}
-            className="p-2 hover:bg-blue-600 rounded-full transition-colors"
+            className="p-1.5 hover:bg-blue-600 rounded-full transition-colors"
             aria-label="إغلاق القائمة"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Menu Content */}
-        <div className="flex-1 overflow-y-auto">
-          <nav className="p-4">
-            <ul className="space-y-2">
+        {/* Menu Content - Optimized for no scrolling */}
+        <div className="flex-1 overflow-hidden">
+          <nav className="p-2 h-full">
+            <ul className="space-y-0.5 h-full flex flex-col">
               {menuItems.map((item, index) => {
                 const IconComponent = item.icon;
                 return (
-                  <li key={index}>
+                  <li key={index} className="flex-shrink-0">
                     <Link
                       to={item.path}
-                      className="flex items-center gap-3 p-3 text-gray-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition-colors group"
+                      className="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-50 hover:text-brand-blue rounded transition-colors group text-sm"
                       onClick={closeSidebar}
                     >
-                      <IconComponent className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                      <IconComponent className="w-4 h-4 group-hover:scale-110 transition-transform flex-shrink-0" />
                       <span className="font-medium">{item.title}</span>
                     </Link>
                     
-                    {/* Sub Items */}
+                    {/* Sub Items - Compact */}
                     {item.subItems && (
-                      <ul className="mr-8 mt-2 space-y-1">
+                      <ul className="mr-6 mt-0.5 space-y-0.5">
                         {item.subItems.map((subItem, subIndex) => (
                           <li key={subIndex}>
                             <Link
                               to={subItem.path}
-                              className="block p-2 text-sm text-gray-600 hover:text-brand-blue hover:bg-blue-50 rounded transition-colors"
+                              className="block p-1.5 text-xs text-gray-600 hover:text-brand-blue hover:bg-blue-50 rounded transition-colors"
                               onClick={closeSidebar}
                             >
                               {subItem.title}
@@ -177,19 +177,19 @@ const Sidebar = () => {
           </nav>
         </div>
 
-        {/* Footer */}
-        <div className="p-6 border-t bg-gray-50">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <Phone className="w-4 h-4" />
+        {/* Footer - Compact */}
+        <div className="p-3 border-t bg-gray-50 flex-shrink-0">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs text-gray-600">
+              <Phone className="w-3 h-3" />
               <span>+96777749263</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <Mail className="w-4 h-4" />
+            <div className="flex items-center gap-2 text-xs text-gray-600">
+              <Mail className="w-3 h-3" />
               <span>info@shabam.com</span>
             </div>
             <p className="text-xs text-gray-500 text-center">
-              © 2024 شبام للتجارة - جميع الحقوق محفوظة
+              © 2024 شبام للتجارة
             </p>
           </div>
         </div>
