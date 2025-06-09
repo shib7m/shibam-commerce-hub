@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Monitor, Sofa, Laptop, Home, Coffee } from 'lucide-react';
+import { Monitor, Sofa, Laptop, Home, Coffee, BookOpen, Shirt } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -12,7 +12,7 @@ const CategoriesSection = () => {
       icon: Monitor,
       color: 'bg-blue-100 text-blue-600',
       count: 150,
-      path: '/electronics/tvs'
+      path: '/televisions'
     },
     {
       id: 2,
@@ -20,15 +20,15 @@ const CategoriesSection = () => {
       icon: Sofa,
       color: 'bg-green-100 text-green-600',
       count: 200,
-      path: '/furniture'
+      path: '/home-furniture'
     },
     {
       id: 3,
-      name: 'أجهزة الكمبيوتر',
-      icon: Laptop,
-      color: 'bg-purple-100 text-purple-600',
-      count: 85,
-      path: '/electronics'
+      name: 'أجهزة المطبخ',
+      icon: Coffee,
+      color: 'bg-red-100 text-red-600',
+      count: 90,
+      path: '/kitchen-appliances'
     },
     {
       id: 4,
@@ -40,11 +40,27 @@ const CategoriesSection = () => {
     },
     {
       id: 5,
-      name: 'أجهزة المطبخ',
-      icon: Coffee,
-      color: 'bg-red-100 text-red-600',
-      count: 90,
-      path: '/small-appliances'
+      name: 'الإلكترونيات',
+      icon: Laptop,
+      color: 'bg-purple-100 text-purple-600',
+      count: 85,
+      path: '/electronics'
+    },
+    {
+      id: 6,
+      name: 'القرطاسية',
+      icon: BookOpen,
+      color: 'bg-cyan-100 text-cyan-600',
+      count: 65,
+      path: '/stationery'
+    },
+    {
+      id: 7,
+      name: 'الملابس',
+      icon: Shirt,
+      color: 'bg-pink-100 text-pink-600',
+      count: 110,
+      path: '/clothing'
     }
   ];
 
@@ -56,7 +72,7 @@ const CategoriesSection = () => {
           <p className="text-gray-600">اكتشف مجموعتنا الواسعة من المنتجات</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-6">
           {categories.map((category) => {
             const IconComponent = category.icon;
             return (
@@ -66,8 +82,8 @@ const CategoriesSection = () => {
                     <div className={`w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center ${category.color} group-hover:scale-110 transition-transform duration-300`}>
                       <IconComponent className="w-8 h-8" />
                     </div>
-                    <h3 className="font-semibold text-gray-800 mb-2">{category.name}</h3>
-                    <p className="text-sm text-gray-500">{category.count} منتج</p>
+                    <h3 className="font-semibold text-gray-800 mb-2 text-sm">{category.name}</h3>
+                    <p className="text-xs text-gray-500">{category.count} منتج</p>
                   </CardContent>
                 </Card>
               </Link>
