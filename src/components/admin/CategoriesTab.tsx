@@ -6,8 +6,8 @@ import type { Category } from '@/types/admin';
 
 interface CategoriesTabProps {
   categories: Category[];
-  newCategory: Omit<Category, 'id' | 'productCount'>;
-  setNewCategory: (category: Omit<Category, 'id' | 'productCount'>) => void;
+  newCategory: Omit<Category, 'id' | 'productCount'> & { isSubcategory?: boolean; parentId?: string };
+  setNewCategory: (category: Omit<Category, 'id' | 'productCount'> & { isSubcategory?: boolean; parentId?: string }) => void;
   onAddCategory: () => void;
   onDeleteCategory: (id: string) => void;
 }
@@ -25,6 +25,7 @@ const CategoriesTab = ({
         newCategory={newCategory}
         setNewCategory={setNewCategory}
         onAddCategory={onAddCategory}
+        categories={categories}
       />
       <CategoriesList
         categories={categories}

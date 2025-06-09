@@ -10,6 +10,7 @@ export interface Product {
   id: string;
   name: string;
   price: number;
+  oldPrice?: number;
   category: string;
   description: string;
   image: string;
@@ -24,4 +25,5 @@ export interface Category {
   icon: string;
   media: MediaFile[];
   productCount: number;
+  parentId?: string;
 }

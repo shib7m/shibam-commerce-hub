@@ -12,6 +12,7 @@ export const useAdminData = () => {
       id: '1',
       name: 'تلفزيون ذكي 55 بوصة',
       price: 1200,
+      oldPrice: 1500,
       category: 'electronics',
       description: 'تلفزيون ذكي عالي الدقة مع تقنية 4K',
       image: '/placeholder.svg',
@@ -39,6 +40,7 @@ export const useAdminData = () => {
   const [newProduct, setNewProduct] = useState({
     name: '',
     price: 0,
+    oldPrice: undefined as number | undefined,
     category: '',
     description: '',
     image: '',
@@ -50,42 +52,130 @@ export const useAdminData = () => {
     name: '',
     description: '',
     icon: 'Package',
-    media: [] as MediaFile[]
+    media: [] as MediaFile[],
+    isSubcategory: false,
+    parentId: undefined as string | undefined
   });
 
   const handleAddProduct = () => {
+    // Validation
+    if (!newProduct.name.trim() || newProduct.price <= 0 || !newProduct.category.trim() || !newProduct.description.trim()) {
+      toast({
+        title: "خطأ في البيانات",
+        description: "يرجى ملء جميع الحقول المطلوبة",
+        variant: "destructive"
+      });
+      return;
+    }
+
     const product: Product = {
       id: Date.now().toString(),
       ...newProduct
     };
+    
     setProducts([...products, product]);
-    setNewProduct({ name: '', price: 0, category: '', description: '', image: '', media: [], inStock: true });
+    
+    // Update category product count
+    setCategories(prev => prev.map(cat => 
+      cat.id === newProduct.category 
+        ? { ...cat, productCount: cat.productCount + 1 }
+        : cat
+    ));
+    
+    setNewProduct({ 
+      name: '', 
+      price: 0, 
+      oldPrice: undefined,
+      category: '', 
+      description: '', 
+      image: '', 
+      media: [], 
+      inStock: true 
+    });
+    
     toast({
       title: "تم إضافة المنتج",
-      description: "تم حفظ المنتج بنجاح مع الوسائط المرفقة"
+      description: "تم حفظ المنتج بنجاح وظهر للمستخدمين فوراً"
     });
   };
 
   const handleDeleteProduct = (id: string) => {
-    setProducts(products.filter(p => p.id !== id));
+    const productToDelete = products.find(p => p.id === id);
+    if (productToDelete) {
+      setProducts(products.filter(p => p.id !== id));
+      
+      // Update category product count
+      setCategories(prev => prev.map(cat => 
+        cat.id === productToDelete.category 
+          ? { ...cat, productCount: Math.max(0, cat.productCount - 1) }
+          : cat
+      ));
+    }
   };
 
   const handleAddCategory = () => {
+    // Validation
+    if (!newCategory.name.trim() || !newCategory.description.trim() || !newCategory.icon.trim()) {
+      toast({
+        title: "خطأ في البيانات",
+        description: "يرجى ملء جميع الحقول المطلوبة",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (newCategory.isSubcategory && !newCategory.parentId) {
+      toast({
+        title: "خطأ في البيانات",
+        description: "يرجى اختيار القسم الرئيسي للقسم الفرعي",
+        variant: "destructive"
+      });
+      return;
+    }
+
     const category: Category = {
       id: newCategory.name.toLowerCase().replace(/\s+/g, '-'),
-      ...newCategory,
-      productCount: 0
+      name: newCategory.name,
+      description: newCategory.description,
+      icon: newCategory.icon,
+      media: newCategory.media,
+      productCount: 0,
+      parentId: newCategory.parentId
     };
+    
     setCategories([...categories, category]);
-    setNewCategory({ name: '', description: '', icon: 'Package', media: [] });
+    setNewCategory({ 
+      name: '', 
+      description: '', 
+      icon: 'Package', 
+      media: [],
+      isSubcategory: false,
+      parentId: undefined
+    });
+    
     toast({
       title: "تم إضافة القسم",
-      description: "تم حفظ القسم بنجاح مع الوسائط المرفقة"
+      description: "تم حفظ القسم بنجاح وظهر للمستخدمين فوراً"
     });
   };
 
   const handleDeleteCategory = (id: string) => {
+    // Check if category has products
+    const categoryProducts = products.filter(p => p.category === id);
+    if (categoryProducts.length > 0) {
+      toast({
+        title: "لا يمكن حذف القسم",
+        description: "يجب حذف جميع المنتجات من القسم أولاً",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setCategories(categories.filter(c => c.id !== id));
+    toast({
+      title: "تم حذف القسم",
+      description: "تم حذف القسم بنجاح"
+    });
   };
 
   return {

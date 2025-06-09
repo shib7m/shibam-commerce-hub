@@ -2,10 +2,11 @@
 import React from 'react';
 import AddProductForm from './AddProductForm';
 import ProductsList from './ProductsList';
-import type { Product } from '@/types/admin';
+import type { Product, Category } from '@/types/admin';
 
 interface ProductsTabProps {
   products: Product[];
+  categories: Category[];
   newProduct: Omit<Product, 'id'>;
   setNewProduct: (product: Omit<Product, 'id'>) => void;
   onAddProduct: () => void;
@@ -14,6 +15,7 @@ interface ProductsTabProps {
 
 const ProductsTab = ({ 
   products, 
+  categories,
   newProduct, 
   setNewProduct, 
   onAddProduct, 
@@ -25,6 +27,7 @@ const ProductsTab = ({
         newProduct={newProduct}
         setNewProduct={setNewProduct}
         onAddProduct={onAddProduct}
+        categories={categories}
       />
       <ProductsList
         products={products}

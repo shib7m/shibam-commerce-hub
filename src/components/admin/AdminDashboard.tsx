@@ -28,7 +28,7 @@ const AdminDashboard = () => {
     setNewProduct(product);
   };
 
-  const handleNewCategoryChange = (category: Omit<Category, 'id' | 'productCount'>) => {
+  const handleNewCategoryChange = (category: Omit<Category, 'id' | 'productCount'> & { isSubcategory?: boolean; parentId?: string }) => {
     setNewCategory(category);
   };
 
@@ -56,6 +56,7 @@ const AdminDashboard = () => {
       <TabsContent value="products">
         <ProductsTab
           products={products}
+          categories={categories}
           newProduct={newProduct}
           setNewProduct={handleNewProductChange}
           onAddProduct={handleAddProduct}
