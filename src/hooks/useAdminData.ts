@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Product, Category, MediaFile } from '@/types/admin';
@@ -37,24 +36,24 @@ export const useAdminData = () => {
     { id: 'office-furniture', name: 'الأثاث المكتبي', description: 'أثاث مكتبي احترافي', icon: 'Briefcase', media: [], productCount: 28 }
   ]);
 
-  const [newProduct, setNewProduct] = useState({
+  const [newProduct, setNewProduct] = useState<Omit<Product, 'id'>>({
     name: '',
     price: 0,
-    oldPrice: undefined as number | undefined,
+    oldPrice: undefined,
     category: '',
     description: '',
     image: '',
-    media: [] as MediaFile[],
+    media: [],
     inStock: true
   });
 
-  const [newCategory, setNewCategory] = useState({
+  const [newCategory, setNewCategory] = useState<Omit<Category, 'id' | 'productCount'> & { isSubcategory?: boolean; parentId?: string }>({
     name: '',
     description: '',
     icon: 'Package',
-    media: [] as MediaFile[],
+    media: [],
     isSubcategory: false,
-    parentId: undefined as string | undefined
+    parentId: undefined
   });
 
   const handleAddProduct = () => {
