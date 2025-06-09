@@ -12,6 +12,7 @@ export interface Product {
   price: number;
   oldPrice?: number;
   category: string;
+  subcategory?: string;
   description: string;
   image: string;
   media: MediaFile[];
@@ -26,4 +27,5 @@ export interface Category {
   media: MediaFile[];
   productCount: number;
   parentId?: string;
+  subcategories?: Category[];
 }

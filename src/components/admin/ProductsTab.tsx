@@ -11,6 +11,7 @@ interface ProductsTabProps {
   setNewProduct: (product: Omit<Product, 'id'>) => void;
   onAddProduct: () => void;
   onDeleteProduct: (id: string) => void;
+  getSubcategoriesForCategory: (categoryId: string) => Category[];
 }
 
 const ProductsTab = ({ 
@@ -19,19 +20,22 @@ const ProductsTab = ({
   newProduct, 
   setNewProduct, 
   onAddProduct, 
-  onDeleteProduct 
+  onDeleteProduct,
+  getSubcategoriesForCategory
 }: ProductsTabProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <AddProductForm
         newProduct={newProduct}
         setNewProduct={setNewProduct}
         onAddProduct={onAddProduct}
         categories={categories}
+        getSubcategoriesForCategory={getSubcategoriesForCategory}
       />
       <ProductsList
         products={products}
         onDeleteProduct={onDeleteProduct}
+        categories={categories}
       />
     </div>
   );

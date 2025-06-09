@@ -14,9 +14,10 @@ interface AddProductFormProps {
   setNewProduct: (product: Omit<Product, 'id'>) => void;
   onAddProduct: () => void;
   categories: Category[];
+  getSubcategoriesForCategory: (categoryId: string) => Category[];
 }
 
-const AddProductForm = ({ newProduct, setNewProduct, onAddProduct, categories }: AddProductFormProps) => {
+const AddProductForm = ({ newProduct, setNewProduct, onAddProduct, categories, getSubcategoriesForCategory }: AddProductFormProps) => {
   const handleMediaChange = (media: any[]) => {
     setNewProduct({
       ...newProduct,
@@ -25,37 +26,52 @@ const AddProductForm = ({ newProduct, setNewProduct, onAddProduct, categories }:
     });
   };
 
+  const handleCategoryChange = (categoryId: string) => {
+    setNewProduct({
+      ...newProduct,
+      category: categoryId,
+      subcategory: '' // Reset subcategory when main category changes
+    });
+  };
+
   const isFormValid = () => {
     return newProduct.name.trim() !== '' && 
            newProduct.price > 0 && 
            newProduct.category.trim() !== '' &&
-           newProduct.description.trim() !== '';
+           newProduct.description.trim() !== '' &&
+           (newProduct.oldPrice === undefined || newProduct.oldPrice > newProduct.price);
   };
 
+  const selectedCategorySubcategories = newProduct.category ? getSubcategoriesForCategory(newProduct.category) : [];
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Plus className="w-5 h-5" />
+    <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
+      <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg">
+        <CardTitle className="flex items-center gap-2 text-xl">
+          <Plus className="w-6 h-6" />
           إضافة منتج جديد
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Input
-            placeholder="اسم المنتج *"
-            value={newProduct.name}
-            onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
-            className={newProduct.name.trim() === '' ? 'border-red-300' : ''}
-          />
+      <CardContent className="space-y-6 p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium">اختر القسم *</label>
+            <label className="text-sm font-semibold text-gray-700">اسم المنتج *</label>
+            <Input
+              placeholder="أدخل اسم المنتج"
+              value={newProduct.name}
+              onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
+              className={`transition-all duration-200 ${newProduct.name.trim() === '' ? 'border-red-300 focus:border-red-500' : 'border-green-300 focus:border-green-500'}`}
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-gray-700">القسم الرئيسي *</label>
             <Select 
               value={newProduct.category} 
-              onValueChange={(value) => setNewProduct({...newProduct, category: value})}
+              onValueChange={handleCategoryChange}
             >
-              <SelectTrigger className={newProduct.category.trim() === '' ? 'border-red-300' : ''}>
-                <SelectValue placeholder="اختر القسم" />
+              <SelectTrigger className={`transition-all duration-200 ${newProduct.category.trim() === '' ? 'border-red-300' : 'border-green-300'}`}>
+                <SelectValue placeholder="اختر القسم الرئيسي" />
               </SelectTrigger>
               <SelectContent>
                 {categories.map((category) => (
@@ -66,51 +82,98 @@ const AddProductForm = ({ newProduct, setNewProduct, onAddProduct, categories }:
               </SelectContent>
             </Select>
           </div>
-          <Input
-            type="number"
-            placeholder="السعر الجديد *"
-            value={newProduct.price}
-            onChange={(e) => setNewProduct({...newProduct, price: parseFloat(e.target.value)})}
-            className={newProduct.price <= 0 ? 'border-red-300' : ''}
-          />
-          <Input
-            type="number"
-            placeholder="السعر القديم (اختياري)"
-            value={newProduct.oldPrice || ''}
-            onChange={(e) => setNewProduct({...newProduct, oldPrice: parseFloat(e.target.value) || undefined})}
-          />
-          <Input
-            placeholder="رابط الصورة الرئيسية (اختياري)"
-            value={newProduct.image}
-            onChange={(e) => setNewProduct({...newProduct, image: e.target.value})}
+
+          {selectedCategorySubcategories.length > 0 && (
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">القسم الفرعي</label>
+              <Select 
+                value={newProduct.subcategory || ''} 
+                onValueChange={(value) => setNewProduct({...newProduct, subcategory: value})}
+              >
+                <SelectTrigger className="border-gray-300">
+                  <SelectValue placeholder="اختر القسم الفرعي (اختياري)" />
+                </SelectTrigger>
+                <SelectContent>
+                  {selectedCategorySubcategories.map((subcategory) => (
+                    <SelectItem key={subcategory.id} value={subcategory.id}>
+                      {subcategory.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-gray-700">السعر الجديد *</label>
+            <Input
+              type="number"
+              placeholder="أدخل السعر"
+              value={newProduct.price || ''}
+              onChange={(e) => setNewProduct({...newProduct, price: parseFloat(e.target.value) || 0})}
+              className={`transition-all duration-200 ${newProduct.price <= 0 ? 'border-red-300 focus:border-red-500' : 'border-green-300 focus:border-green-500'}`}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-gray-700">السعر القديم</label>
+            <Input
+              type="number"
+              placeholder="السعر قبل التخفيض (اختياري)"
+              value={newProduct.oldPrice || ''}
+              onChange={(e) => setNewProduct({...newProduct, oldPrice: parseFloat(e.target.value) || undefined})}
+              className={`transition-all duration-200 ${newProduct.oldPrice !== undefined && newProduct.oldPrice <= newProduct.price ? 'border-red-300 focus:border-red-500' : 'border-gray-300'}`}
+            />
+            {newProduct.oldPrice !== undefined && newProduct.oldPrice <= newProduct.price && (
+              <p className="text-red-500 text-xs">السعر القديم يجب أن يكون أكبر من السعر الجديد</p>
+            )}
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-sm font-semibold text-gray-700">رابط الصورة الرئيسية</label>
+            <Input
+              placeholder="رابط الصورة (اختياري)"
+              value={newProduct.image}
+              onChange={(e) => setNewProduct({...newProduct, image: e.target.value})}
+              className="border-gray-300"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700">وصف المنتج *</label>
+          <Textarea
+            placeholder="أدخل وصف تفصيلي للمنتج"
+            value={newProduct.description}
+            onChange={(e) => setNewProduct({...newProduct, description: e.target.value})}
+            className={`transition-all duration-200 min-h-[100px] ${newProduct.description.trim() === '' ? 'border-red-300 focus:border-red-500' : 'border-green-300 focus:border-green-500'}`}
           />
         </div>
-        <Textarea
-          placeholder="وصف المنتج *"
-          value={newProduct.description}
-          onChange={(e) => setNewProduct({...newProduct, description: e.target.value})}
-          className={newProduct.description.trim() === '' ? 'border-red-300' : ''}
-        />
         
-        <MediaUploader
-          onMediaChange={handleMediaChange}
-          initialMedia={newProduct.media || []}
-          maxFiles={10}
-        />
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700">صور إضافية</label>
+          <MediaUploader
+            onMediaChange={handleMediaChange}
+            initialMedia={newProduct.media || []}
+            maxFiles={10}
+          />
+        </div>
         
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3 pt-4">
           {!isFormValid() && (
-            <p className="text-red-500 text-sm">
-              يرجى ملء جميع الحقول المطلوبة (*) قبل حفظ المنتج
-            </p>
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-600 text-sm font-medium">
+                يرجى ملء جميع الحقول المطلوبة (*) والتأكد من صحة البيانات
+              </p>
+            </div>
           )}
           <Button 
             onClick={onAddProduct} 
-            className="bg-brand-blue hover:bg-blue-600"
+            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 text-lg transition-all duration-200 transform hover:scale-105"
             disabled={!isFormValid()}
           >
-            <Save className="w-4 h-4 ml-2" />
-            حفظ المنتج
+            <Save className="w-5 h-5 ml-2" />
+            حفظ المنتج ونشره
           </Button>
         </div>
       </CardContent>
