@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useProducts } from '@/contexts/ProductsContext';
 import { Product, Category, MediaFile } from '@/types/admin';
 
 export const useAdminData = () => {
   const { toast } = useToast();
+  const { products, addProduct: addProductToContext, deleteProduct: deleteProductFromContext } = useProducts();
 
   // Updated category structure with all requested categories and subcategories
   const [categories, setCategories] = useState<Category[]>([
@@ -111,33 +113,6 @@ export const useAdminData = () => {
     }
   ]);
 
-  const [products, setProducts] = useState<Product[]>([
-    {
-      id: '1',
-      name: 'تلفزيون ذكي 55 بوصة',
-      price: 1200,
-      oldPrice: 1500,
-      category: 'televisions',
-      subcategory: 'tv-screens',
-      description: 'تلفزيون ذكي عالي الدقة مع تقنية 4K',
-      image: '/placeholder.svg',
-      media: [],
-      inStock: true
-    },
-    {
-      id: '2',
-      name: 'كنبة مودرن للمعيشة',
-      price: 850,
-      oldPrice: 1200,
-      category: 'home-furniture',
-      subcategory: 'living-rooms',
-      description: 'كنبة مريحة بتصميم عصري لغرفة المعيشة',
-      image: '/placeholder.svg',
-      media: [],
-      inStock: true
-    }
-  ]);
-
   const [newProduct, setNewProduct] = useState<Omit<Product, 'id'>>({
     name: '',
     price: 0,
@@ -208,7 +183,7 @@ export const useAdminData = () => {
       ...newProduct
     };
     
-    setProducts([...products, product]);
+    addProductToContext(product);
     
     setCategories(prev => prev.map(cat => {
       if (cat.id === newProduct.category) {
@@ -239,14 +214,14 @@ export const useAdminData = () => {
     
     toast({
       title: "تم إضافة المنتج بنجاح",
-      description: "تم حفظ المنتج وإضافته للقسم المحدد"
+      description: "تم حفظ المنتج وإضافته للقسم المحدد وسيظهر الآن في الموقع"
     });
   };
 
   const handleDeleteProduct = (id: string) => {
     const productToDelete = products.find(p => p.id === id);
     if (productToDelete) {
-      setProducts(products.filter(p => p.id !== id));
+      deleteProductFromContext(id);
       
       setCategories(prev => prev.map(cat => {
         if (cat.id === productToDelete.category) {
@@ -265,7 +240,7 @@ export const useAdminData = () => {
 
       toast({
         title: "تم حذف المنتج",
-        description: "تم حذف المنتج بنجاح"
+        description: "تم حذف المنتج بنجاح من الموقع"
       });
     }
   };

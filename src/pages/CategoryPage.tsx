@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCart } from '@/contexts/CartContext';
+import { useProducts } from '@/contexts/ProductsContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -13,78 +14,11 @@ interface CategoryPageProps {
   category: string;
 }
 
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  rating: number;
-  category: string;
-  subcategory: string;
-  createdAt: string;
-}
-
-// Mock products data
-const mockProducts: Product[] = [
-  {
-    id: '1',
-    name: 'تلفزيون سامسونج 55 بوصة 4K',
-    price: 1200,
-    originalPrice: 1400,
-    image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=300',
-    rating: 4.5,
-    category: 'electronics',
-    subcategory: 'tvs',
-    createdAt: '2024-01-15'
-  },
-  {
-    id: '2',
-    name: 'مكيف هواء 24000 وحدة',
-    price: 800,
-    originalPrice: 950,
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=300',
-    rating: 4.2,
-    category: 'electronics',
-    subcategory: 'air-conditioners',
-    createdAt: '2024-01-20'
-  },
-  {
-    id: '3',
-    name: 'ثلاجة LG نو فروست',
-    price: 900,
-    image: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=300',
-    rating: 4.7,
-    category: 'electronics',
-    subcategory: 'refrigerators',
-    createdAt: '2024-01-10'
-  },
-  {
-    id: '4',
-    name: 'أريكة زاوية مودرن',
-    price: 1500,
-    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300',
-    rating: 4.3,
-    category: 'furniture',
-    subcategory: 'living-rooms',
-    createdAt: '2024-01-12'
-  },
-  {
-    id: '5',
-    name: 'مكتب مكتبي خشبي',
-    price: 400,
-    image: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300',
-    rating: 4.1,
-    category: 'office-furniture',
-    subcategory: 'desks',
-    createdAt: '2024-01-18'
-  }
-];
-
 const CategoryPage: React.FC<CategoryPageProps> = ({ category }) => {
   const { subcategory } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { getProductsByCategory } = useProducts();
   const [sortBy, setSortBy] = useState('newest');
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
 
@@ -94,36 +28,51 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category }) => {
     'furniture': { name: 'الأثاث المنزلي', icon: '🛋️' },
     'office-furniture': { name: 'الأثاث المكتبي', icon: '🏢' },
     'home-decor': { name: 'ديكورات المنزل', icon: '🎨' },
-    'small-appliances': { name: 'الأجهزة الصغيرة', icon: '☕' }
+    'small-appliances': { name: 'الأجهزة الصغيرة', icon: '☕' },
+    'home-furniture': { name: 'الأثاث المنزلي', icon: '🛋️' },
+    'kitchen-appliances': { name: 'أجهزة المطبخ', icon: '🍽️' },
+    'televisions': { name: 'أجهزة التلفزيون', icon: '📺' },
+    'stationery': { name: 'القرطاسية', icon: '📚' },
+    'clothing': { name: 'الملابس', icon: '👕' }
   };
 
   const subcategoryInfo = {
-    'tvs': 'التلفزيونات',
-    'air-conditioners': 'المكيفات',
-    'refrigerators': 'الثلاجات',
-    'washing-machines': 'الغسالات',
+    'tv-screens': 'شاشات التلفزيون',
+    'receivers': 'أجهزة الاستقبال',
+    'screen-accessories': 'ملحقات الشاشات',
+    'remote-controls': 'أجهزة التحكم عن بعد',
     'bedrooms': 'غرف النوم',
     'living-rooms': 'غرف المعيشة',
     'dining-rooms': 'غرف الطعام',
-    'desks': 'مكاتب',
-    'chairs': 'كراسي مكتبية',
-    'cabinets': 'خزائن',
-    'lighting': 'إضاءة',
-    'curtains': 'ستائر',
-    'carpets': 'سجاد',
-    'blenders': 'خلاطات',
-    'irons': 'مكاوي',
-    'kitchen-tools': 'أدوات المطبخ'
+    'blenders': 'الخلاطات',
+    'ovens': 'الأفران',
+    'washing-machines': 'الغسالات',
+    'kitchen-tools': 'أدوات المطبخ',
+    'home-cookware': 'أواني الطبخ المنزلية',
+    'refrigerators': 'الثلاجات',
+    'coolers': 'المبردات',
+    'cabinets-kitchen': 'خزائن المطبخ',
+    'mobile-electronics': 'إلكترونيات الجوال',
+    'general-electronics': 'الإلكترونيات العامة',
+    'gaming-consoles': 'بلايستيشن وإكس بوكس',
+    'computer-accessories': 'ملحقات الكمبيوتر',
+    'notebooks-supplies': 'الدفاتر والمستلزمات',
+    'school-uniforms': 'الزي المدرسي',
+    'girls-abayas': 'عبايات البنات',
+    'kids-dresses': 'فساتين الأطفال',
+    'underwear': 'الملابس الداخلية',
+    'evening-dresses': 'فساتين السهرة',
+    'shoes': 'الأحذية',
+    'accessories': 'الإكسسوارات',
+    'beauty-tools': 'أدوات التجميل'
   };
+
+  // Get products from context instead of mock data
+  const allProducts = getProductsByCategory(category, subcategory);
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = mockProducts.filter(product => {
-      if (subcategory) {
-        return product.category === category && product.subcategory === subcategory;
-      }
-      return product.category === category;
-    });
+    let filtered = [...allProducts];
 
     // Sort products
     switch (sortBy) {
@@ -134,18 +83,19 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category }) => {
         filtered = filtered.sort((a, b) => b.price - a.price);
         break;
       case 'rating':
-        filtered = filtered.sort((a, b) => b.rating - a.rating);
+        // For now, sort by price desc as we don't have rating in our Product type
+        filtered = filtered.sort((a, b) => b.price - a.price);
         break;
       case 'newest':
       default:
-        filtered = filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        filtered = filtered.sort((a, b) => parseInt(b.id) - parseInt(a.id));
         break;
     }
 
     return filtered;
-  }, [category, subcategory, sortBy]);
+  }, [allProducts, sortBy]);
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (product: any) => {
     addToCart({
       id: product.id,
       name: product.name,
@@ -255,7 +205,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category }) => {
                 <CardContent className={`p-4 ${viewType === 'list' ? 'flex items-center gap-4' : ''}`}>
                   <div className={viewType === 'list' ? 'w-32 h-32 flex-shrink-0' : 'aspect-square mb-4'}>
                     <img
-                      src={product.image}
+                      src={product.image || '/placeholder.svg'}
                       alt={product.name}
                       className="w-full h-full object-cover rounded-lg"
                       loading="lazy"
@@ -265,22 +215,16 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category }) => {
                   <div className={viewType === 'list' ? 'flex-1' : ''}>
                     <h3 className="font-semibold text-lg mb-2 line-clamp-2">{product.name}</h3>
                     
-                    <div className="flex items-center gap-1 mb-2">
-                      <div className="flex text-yellow-400">
-                        {'★'.repeat(Math.floor(product.rating))}
-                        {'☆'.repeat(5 - Math.floor(product.rating))}
-                      </div>
-                      <span className="text-sm text-gray-500">({product.rating})</span>
-                    </div>
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">{product.description}</p>
                     
                     <div className="flex items-center gap-2 mb-4">
                       <span className="text-xl font-bold text-brand-blue">${product.price}</span>
-                      {product.originalPrice && (
-                        <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
+                      {product.oldPrice && (
+                        <span className="text-sm text-gray-500 line-through">${product.oldPrice}</span>
                       )}
-                      {product.originalPrice && (
+                      {product.oldPrice && (
                         <span className="text-sm text-green-600 font-medium">
-                          وفر ${product.originalPrice - product.price}
+                          وفر ${product.oldPrice - product.price}
                         </span>
                       )}
                     </div>
