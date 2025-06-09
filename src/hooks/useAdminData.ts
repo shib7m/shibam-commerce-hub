@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Product, Category, MediaFile } from '@/types/admin';
@@ -6,54 +5,19 @@ import { Product, Category, MediaFile } from '@/types/admin';
 export const useAdminData = () => {
   const { toast } = useToast();
 
-  // Updated sample data with proper category structure
+  // Updated category structure with all requested categories and subcategories
   const [categories, setCategories] = useState<Category[]>([
-    { 
-      id: 'televisions', 
-      name: 'أجهزة التلفزيون', 
-      description: 'أجهزة تلفزيون حديثة وذكية', 
-      icon: 'Monitor', 
-      media: [], 
-      productCount: 15,
-      subcategories: [
-        { id: 'smart-tv', name: 'تلفزيونات ذكية', description: 'تلفزيونات ذكية بأحدث التقنيات', icon: 'Monitor', media: [], productCount: 8, parentId: 'televisions' },
-        { id: 'led-tv', name: 'تلفزيونات LED', description: 'تلفزيونات LED عالية الجودة', icon: 'Monitor', media: [], productCount: 7, parentId: 'televisions' }
-      ]
-    },
     { 
       id: 'home-furniture', 
       name: 'الأثاث المنزلي', 
       description: 'أثاث عصري للمنزل', 
       icon: 'Sofa', 
       media: [], 
-      productCount: 32,
+      productCount: 0,
       subcategories: [
-        { id: 'bedrooms', name: 'غرف النوم', description: 'أثاث غرف النوم الأنيقة', icon: 'Home', media: [], productCount: 15, parentId: 'home-furniture' },
-        { id: 'living-rooms', name: 'غرف المعيشة', description: 'أثاث غرف المعيشة المريحة', icon: 'Sofa', media: [], productCount: 17, parentId: 'home-furniture' }
-      ]
-    },
-    { 
-      id: 'computers', 
-      name: 'أجهزة الكمبيوتر', 
-      description: 'أجهزة كمبيوتر وملحقاتها', 
-      icon: 'Laptop', 
-      media: [], 
-      productCount: 28,
-      subcategories: [
-        { id: 'laptops', name: 'أجهزة اللابتوب', description: 'أجهزة لابتوب متنوعة', icon: 'Laptop', media: [], productCount: 12, parentId: 'computers' },
-        { id: 'desktop', name: 'أجهزة مكتبية', description: 'أجهزة كمبيوتر مكتبية', icon: 'Monitor', media: [], productCount: 16, parentId: 'computers' }
-      ]
-    },
-    { 
-      id: 'home-decor', 
-      name: 'ديكور المنزل', 
-      description: 'قطع ديكور أنيقة للمنزل', 
-      icon: 'Palette', 
-      media: [], 
-      productCount: 45,
-      subcategories: [
-        { id: 'wall-art', name: 'فن الحائط', description: 'لوحات وفن للحوائط', icon: 'Image', media: [], productCount: 20, parentId: 'home-decor' },
-        { id: 'lighting', name: 'الإضاءة', description: 'حلول إضاءة متنوعة', icon: 'Lightbulb', media: [], productCount: 25, parentId: 'home-decor' }
+        { id: 'bedrooms', name: 'غرف النوم', description: 'أثاث غرف النوم الأنيقة', icon: 'Home', media: [], productCount: 0, parentId: 'home-furniture' },
+        { id: 'living-rooms', name: 'غرف المعيشة', description: 'أثاث غرف المعيشة المريحة', icon: 'Sofa', media: [], productCount: 0, parentId: 'home-furniture' },
+        { id: 'dining-rooms', name: 'غرف الطعام', description: 'أثاث غرف الطعام الأنيقة', icon: 'UtensilsCrossed', media: [], productCount: 0, parentId: 'home-furniture' }
       ]
     },
     { 
@@ -62,10 +26,87 @@ export const useAdminData = () => {
       description: 'أجهزة المطبخ الحديثة', 
       icon: 'ChefHat', 
       media: [], 
-      productCount: 38,
+      productCount: 0,
       subcategories: [
-        { id: 'small-appliances', name: 'أجهزة صغيرة', description: 'أجهزة المطبخ الصغيرة', icon: 'Coffee', media: [], productCount: 18, parentId: 'kitchen-appliances' },
-        { id: 'large-appliances', name: 'أجهزة كبيرة', description: 'أجهزة المطبخ الكبيرة', icon: 'Refrigerator', media: [], productCount: 20, parentId: 'kitchen-appliances' }
+        { id: 'blenders', name: 'الخلاطات', description: 'خلاطات متنوعة للمطبخ', icon: 'Coffee', media: [], productCount: 0, parentId: 'kitchen-appliances' },
+        { id: 'ovens', name: 'الأفران', description: 'أفران حديثة للطبخ', icon: 'Oven', media: [], productCount: 0, parentId: 'kitchen-appliances' },
+        { id: 'washing-machines', name: 'غسالات', description: 'غسالات عالية الجودة', icon: 'Washing', media: [], productCount: 0, parentId: 'kitchen-appliances' },
+        { id: 'kitchen-tools', name: 'أدوات المطبخ', description: 'أدوات مطبخ متنوعة', icon: 'Utensils', media: [], productCount: 0, parentId: 'kitchen-appliances' },
+        { id: 'home-cookware', name: 'أواني الطبخ المنزلية', description: 'أواني طبخ عالية الجودة', icon: 'Chef', media: [], productCount: 0, parentId: 'kitchen-appliances' },
+        { id: 'refrigerators', name: 'الثلاجات', description: 'ثلاجات حديثة وموفرة', icon: 'Refrigerator', media: [], productCount: 0, parentId: 'kitchen-appliances' },
+        { id: 'coolers', name: 'المبردات', description: 'مبردات متنوعة الأحجام', icon: 'Snowflake', media: [], productCount: 0, parentId: 'kitchen-appliances' },
+        { id: 'cabinets-kitchen', name: 'خزائن المطبخ', description: 'خزائن مطبخ عملية وأنيقة', icon: 'Cabinet', media: [], productCount: 0, parentId: 'kitchen-appliances' }
+      ]
+    },
+    { 
+      id: 'televisions', 
+      name: 'أجهزة التلفزيون', 
+      description: 'أجهزة تلفزيون حديثة وذكية', 
+      icon: 'Monitor', 
+      media: [], 
+      productCount: 0,
+      subcategories: [
+        { id: 'tv-screens', name: 'شاشات التلفزيون', description: 'شاشات تلفزيون عالية الجودة', icon: 'Monitor', media: [], productCount: 0, parentId: 'televisions' },
+        { id: 'receivers', name: 'أجهزة الاستقبال', description: 'أجهزة استقبال متطورة', icon: 'Radio', media: [], productCount: 0, parentId: 'televisions' },
+        { id: 'screen-accessories', name: 'ملحقات الشاشات', description: 'ملحقات وإكسسوارات الشاشات', icon: 'Cable', media: [], productCount: 0, parentId: 'televisions' },
+        { id: 'remote-controls', name: 'أجهزة التحكم عن بعد', description: 'أجهزة تحكم عن بعد متنوعة', icon: 'Gamepad2', media: [], productCount: 0, parentId: 'televisions' }
+      ]
+    },
+    { 
+      id: 'home-decor', 
+      name: 'ديكور المنزل', 
+      description: 'قطع ديكور أنيقة للمنزل', 
+      icon: 'Palette', 
+      media: [], 
+      productCount: 0,
+      subcategories: [
+        { id: 'lighting', name: 'الإضاءة', description: 'حلول إضاءة متنوعة', icon: 'Lightbulb', media: [], productCount: 0, parentId: 'home-decor' },
+        { id: 'curtains', name: 'الستائر', description: 'ستائر أنيقة ومتنوعة', icon: 'Blinds', media: [], productCount: 0, parentId: 'home-decor' },
+        { id: 'rugs-carpets', name: 'السجاد والموكيت', description: 'سجاد وموكيت عالي الجودة', icon: 'Square', media: [], productCount: 0, parentId: 'home-decor' },
+        { id: 'cabinets-decor', name: 'الخزائن', description: 'خزائن ديكور أنيقة', icon: 'Cabinet', media: [], productCount: 0, parentId: 'home-decor' }
+      ]
+    },
+    { 
+      id: 'electronics', 
+      name: 'الإلكترونيات', 
+      description: 'أجهزة إلكترونية متنوعة', 
+      icon: 'Laptop', 
+      media: [], 
+      productCount: 0,
+      subcategories: [
+        { id: 'mobile-electronics', name: 'إلكترونيات الجوال', description: 'ملحقات وإكسسوارات الجوال', icon: 'Smartphone', media: [], productCount: 0, parentId: 'electronics' },
+        { id: 'general-electronics', name: 'الإلكترونيات العامة', description: 'أجهزة إلكترونية متنوعة', icon: 'Zap', media: [], productCount: 0, parentId: 'electronics' },
+        { id: 'gaming-consoles', name: 'بلايستيشن وإكس بوكس', description: 'أجهزة الألعاب وملحقاتها', icon: 'Gamepad2', media: [], productCount: 0, parentId: 'electronics' },
+        { id: 'computer-accessories', name: 'ملحقات الكمبيوتر', description: 'ملحقات وإكسسوارات الكمبيوتر', icon: 'Mouse', media: [], productCount: 0, parentId: 'electronics' }
+      ]
+    },
+    { 
+      id: 'stationery', 
+      name: 'القرطاسية', 
+      description: 'مستلزمات دراسية ومكتبية', 
+      icon: 'BookOpen', 
+      media: [], 
+      productCount: 0,
+      subcategories: [
+        { id: 'notebooks-supplies', name: 'الدفاتر والمستلزمات', description: 'دفاتر ومستلزمات دراسية', icon: 'Notebook', media: [], productCount: 0, parentId: 'stationery' },
+        { id: 'school-uniforms', name: 'الزي المدرسي', description: 'ملابس وأزياء مدرسية', icon: 'GraduationCap', media: [], productCount: 0, parentId: 'stationery' }
+      ]
+    },
+    { 
+      id: 'clothing', 
+      name: 'الملابس', 
+      description: 'ملابس وأزياء متنوعة', 
+      icon: 'Shirt', 
+      media: [], 
+      productCount: 0,
+      subcategories: [
+        { id: 'girls-abayas', name: 'عبايات البنات', description: 'عبايات أنيقة للبنات', icon: 'User', media: [], productCount: 0, parentId: 'clothing' },
+        { id: 'kids-dresses', name: 'فساتين الأطفال', description: 'فساتين جميلة للأطفال', icon: 'Baby', media: [], productCount: 0, parentId: 'clothing' },
+        { id: 'underwear', name: 'الملابس الداخلية', description: 'ملابس داخلية مريحة', icon: 'Shirt', media: [], productCount: 0, parentId: 'clothing' },
+        { id: 'evening-dresses', name: 'فساتين السهرة', description: 'فساتين سهرة أنيقة', icon: 'Sparkles', media: [], productCount: 0, parentId: 'clothing' },
+        { id: 'shoes', name: 'الأحذية', description: 'أحذية متنوعة وأنيقة', icon: 'FootPrints', media: [], productCount: 0, parentId: 'clothing' },
+        { id: 'accessories', name: 'الإكسسوارات', description: 'إكسسوارات متنوعة', icon: 'Watch', media: [], productCount: 0, parentId: 'clothing' },
+        { id: 'beauty-tools', name: 'أدوات التجميل', description: 'أدوات تجميل وعناية', icon: 'Sparkles', media: [], productCount: 0, parentId: 'clothing' }
       ]
     }
   ]);
@@ -77,7 +118,7 @@ export const useAdminData = () => {
       price: 1200,
       oldPrice: 1500,
       category: 'televisions',
-      subcategory: 'smart-tv',
+      subcategory: 'tv-screens',
       description: 'تلفزيون ذكي عالي الدقة مع تقنية 4K',
       image: '/placeholder.svg',
       media: [],
@@ -136,8 +177,14 @@ export const useAdminData = () => {
     return category?.subcategories || [];
   };
 
+  // Get recently added products (last 10 products)
+  const getRecentProducts = () => {
+    return [...products]
+      .sort((a, b) => parseInt(b.id) - parseInt(a.id))
+      .slice(0, 10);
+  };
+
   const handleAddProduct = () => {
-    // Validation
     if (!newProduct.name.trim() || newProduct.price <= 0 || !newProduct.category.trim() || !newProduct.description.trim()) {
       toast({
         title: "خطأ في البيانات",
@@ -147,7 +194,6 @@ export const useAdminData = () => {
       return;
     }
 
-    // Validate old price if provided
     if (newProduct.oldPrice !== undefined && newProduct.oldPrice <= newProduct.price) {
       toast({
         title: "خطأ في السعر",
@@ -164,7 +210,6 @@ export const useAdminData = () => {
     
     setProducts([...products, product]);
     
-    // Update category product count
     setCategories(prev => prev.map(cat => {
       if (cat.id === newProduct.category) {
         return { ...cat, productCount: cat.productCount + 1 };
@@ -203,7 +248,6 @@ export const useAdminData = () => {
     if (productToDelete) {
       setProducts(products.filter(p => p.id !== id));
       
-      // Update category product count
       setCategories(prev => prev.map(cat => {
         if (cat.id === productToDelete.category) {
           return { ...cat, productCount: Math.max(0, cat.productCount - 1) };
@@ -227,7 +271,6 @@ export const useAdminData = () => {
   };
 
   const handleAddCategory = () => {
-    // Validation
     if (!newCategory.name.trim() || !newCategory.description.trim() || !newCategory.icon.trim()) {
       toast({
         title: "خطأ في البيانات",
@@ -259,7 +302,6 @@ export const useAdminData = () => {
     };
 
     if (newCategory.isSubcategory && newCategory.parentId) {
-      // Add as subcategory
       setCategories(prev => prev.map(cat => 
         cat.id === newCategory.parentId 
           ? { 
@@ -269,7 +311,6 @@ export const useAdminData = () => {
           : cat
       ));
     } else {
-      // Add as main category
       setCategories([...categories, { ...newCat, subcategories: [] }]);
     }
     
@@ -289,7 +330,6 @@ export const useAdminData = () => {
   };
 
   const handleDeleteCategory = (id: string) => {
-    // Check if category has products
     const categoryProducts = products.filter(p => p.category === id || p.subcategory === id);
     if (categoryProducts.length > 0) {
       toast({
@@ -300,14 +340,11 @@ export const useAdminData = () => {
       return;
     }
 
-    // Check if it's a main category or subcategory
     const isMainCategory = categories.some(cat => cat.id === id);
     
     if (isMainCategory) {
-      // Delete main category and its subcategories
       setCategories(categories.filter(c => c.id !== id));
     } else {
-      // Delete subcategory
       setCategories(prev => prev.map(cat => ({
         ...cat,
         subcategories: cat.subcategories?.filter(subcat => subcat.id !== id) || []
@@ -332,6 +369,7 @@ export const useAdminData = () => {
     handleAddCategory,
     handleDeleteCategory,
     getAllCategories,
-    getSubcategoriesForCategory
+    getSubcategoriesForCategory,
+    getRecentProducts
   };
 };
