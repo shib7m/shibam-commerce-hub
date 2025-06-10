@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Minus, Plus, Trash2, Home, ArrowLeft, Share2, MessageSquare } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -36,7 +35,8 @@ const Cart = () => {
 
   const getCartShareUrl = () => {
     // Create a URL with cart items as query parameters
-    const cartData = btoa(JSON.stringify(cartItems));
+    // Fix for Arabic characters: use encodeURIComponent instead of btoa for UTF-8 support
+    const cartData = encodeURIComponent(JSON.stringify(cartItems));
     return `${window.location.origin}/cart?shared=${cartData}`;
   };
 
